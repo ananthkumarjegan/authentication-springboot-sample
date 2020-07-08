@@ -24,12 +24,17 @@ public class FunctionController {
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> allAccess(HttpServletRequest request) {
-		String jwt = jwtUtils.generateDynamicJwtToken(request);
-		return  ResponseEntity.ok(new HomePageRespose(jwt,"Welcome to HomePage"));
+		return  jwtUtils.generateDynamicJwtToken(request);
 	}
 	
+//	@GetMapping("/getUserDetails")
+//	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
+//	public ResponseEntity<?> getUserDetails(HttpServletRequest request) {
+//		return jwtUtils.generateDynamicJwtToken(request);
+//	}
+	
 	@GetMapping("/user")
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
 	public String userAccess() {
 		return "User Content.";
 	}

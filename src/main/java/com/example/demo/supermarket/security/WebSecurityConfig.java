@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.supermarket.security.jwt.AuthEntryPointJwt;
 import com.example.demo.supermarket.security.jwt.AuthTokenFilter;
+import com.example.demo.supermarket.security.services.AuthenticationServiceImpl;
 import com.example.demo.supermarket.security.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -35,10 +36,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 		return new AuthTokenFilter();
 	}
+	
+	@Bean
+	public AuthenticationServiceImpl authenticationServiceImpl() {
+		return new AuthenticationServiceImpl();
+	}
 
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(userDetailsService).getUserDetailsService();
 	}
 
 	@Bean
